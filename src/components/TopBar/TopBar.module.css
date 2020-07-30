@@ -1,0 +1,8 @@
+.wrapper {
+  height: 150px;
+  width: 100vw;
+  background-color: #4267B2;
+
+  position: fixed;
+  top: 0;
+}

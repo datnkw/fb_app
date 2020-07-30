@@ -1,0 +1,58 @@
+.ItemUserWrapper {
+  display: flex;
+  width: 80vw;
+  margin: 10px auto;
+
+  border: 1px;
+  
+  background-color: #fff;
+
+  padding: 10px;
+
+  border-radius: 20px;
+
+  cursor: pointer;
+}
+
+.info {
+  flex-grow: 1;
+  padding: 20px;
+
+  display: flex;
+}
+
+.space {
+  flex-grow: 1;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+}
+
+.avatar img {
+  max-width: 90px;
+  max-height: 90px;
+}
+
+.markWrapper {
+  display: flex;
+
+  align-items: center;
+}
+
+.markWrapper p {
+  margin-right: 10px;
+}
+
+.checkbox {
+}
