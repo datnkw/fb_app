@@ -20,6 +20,7 @@ export default function(state = initialState, action) {
   console.log("action type: ", action.type);
   switch (action.type) {
     case INIT_FRIEND_LIST: {
+      
       const friendListObject = convertFriendListToState(action.payload.friendList);
       console.log("friendListObject: ", friendListObject);
       return {

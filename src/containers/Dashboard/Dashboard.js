@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => {
     onInitFriendList: friendList => {
       dispatch(initFriendList(friendList))
     },
-    onClickCheckbox: id => {
+    onClickCheckbox: (id) => {
       dispatch(toggleFriendQuality(id))
     }
   }
@@ -36,7 +36,7 @@ function Dashboard(props) {
   const {friendList, onInitFriendList, onClickCheckbox} = props;
 
   
-
+  console.log('home')
   return (
     <div>
       <TopBar />

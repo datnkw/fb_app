@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import Styles from './PersonalInfo.module.css';
 import { connect } from 'react-redux';
 import { getFriendList, getFriendById } from '../../redux/selectors';
@@ -32,6 +32,11 @@ const mapDispatchToProps = dispatch => {
 
 function reducer(state, action) {
   switch (action.type) {
+    case "all": 
+      return {
+        ...state,
+        ...action.value
+      }
     case "nickname":
       return {
         ...state,
@@ -55,6 +60,7 @@ function reducer(state, action) {
 function PersonalInfo(props) {
   const { info } = props;
 
+  console.log('info in function: ', info);
   const [infoState, setInfoState] = useReducer(reducer, info);
 
   const handleChange = (event) => {
@@ -65,13 +71,33 @@ function PersonalInfo(props) {
     });
   };
 
+  const getDetail = (info, type) => {
+    console.log("get detail");
+    console.log("info: ", info);
+    //remember Mr.Tam has said "don't make your code be complicated"
+    return info ? info[type] : (() => {
+      if(type === 'avatar') {
+        return '../../images/avatar.jpg';
+      } else {
+        return ''
+      }
+    })()
+  }
+
+  useEffect(() => {
+    setInfoState({
+      type: 'all',
+      value: {...info}
+    })
+  }, [info])
+
   return (
     <div className={Styles.wrapper}>
     <div className={Styles.avatarAndNickname} >
-      <img src={infoState.avatar} alt=""/>
+      <img src={getDetail(infoState, 'avatar')} alt=""/>
       <div className={Styles.nicknameWrapper}>
         <p>Nickname</p>
-        <input type="text" name='nickname' value={infoState.nickname} onChange={handleChange}/>
+        <input type="text" name='nickname' value={getDetail(infoState, 'nickname')} onChange={handleChange}/>
       </div>
     </div>
     </div>

@@ -33,7 +33,14 @@ function ItemUser({ info, onClickCheckbox }) {
     });
   }
 
+  const onClickCheckboxInside = (event) => {
+    event.stopPropagation();
+    onClickCheckbox();
+  }
+
   return (
+    
+
     // <Link to={infoPageLink}>
     <div className={Styles.ItemUserWrapper} onClick={()=>goToInfoPage(info.id)}>
       <div className={Styles.avatar}>
@@ -45,7 +52,7 @@ function ItemUser({ info, onClickCheckbox }) {
         <div className={Styles.markWrapper}>
           <p>Bad friend</p>
           <div>
-            <input className={Styles.checkbox} type="checkbox" onClick={onClickCheckbox}  checked={!info.isGoodFriend}/>
+            <input className={Styles.checkbox} type="checkbox" onChange={onClickCheckboxInside}  defaultChecked={!info.isGoodFriend}/>
           </div>
         </div>
       </div>
