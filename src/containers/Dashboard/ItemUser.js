@@ -1,30 +1,8 @@
 import React from "react";
 import Styles from "./Dashboard.module.css";
-// import { Link } from "react-router-dom";
-import { useHistory, useLocation } from "react-router-dom";
-// import { connect } from 'react-redux';
-// import { getFriendById } from '../../redux/selectors';
-// import { toggleFriendQuality } from '../../redux/actions';
-
-// const mapStateToProps = (state, ownProps) => {
-//   const {id} = ownProps;
-
-//   return { info: getFriendById(state, id)}
-// }
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onClickCheckbox: id => {
-//       dispatch(toggleFriendQuality(id))
-//     }
-//   }
-// }
+import { useHistory } from "react-router-dom";
 
 function ItemUser({ info, onClickCheckbox }) {
-  console.log("info: ", info.id);
-
-  const infoPageLink = info.id;
-
   const history = useHistory();
 
   const goToInfoPage = (id) => {
@@ -52,7 +30,7 @@ function ItemUser({ info, onClickCheckbox }) {
         <div className={Styles.markWrapper}>
           <p>Bad friend</p>
           <div>
-            <input className={Styles.checkbox} type="checkbox" onChange={onClickCheckboxInside}  defaultChecked={!info.isGoodFriend}/>
+            <input className={Styles.checkbox} type="checkbox" onClick={onClickCheckboxInside}  defaultChecked={!info.isGoodFriend}/>
           </div>
         </div>
       </div>

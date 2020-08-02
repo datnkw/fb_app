@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { TopBar } from '../../components';
 import ItemUser from './ItemUser';
 import { connect } from 'react-redux';
 import { getFriendList, getFriendById } from '../../redux/selectors';
-import { initFriendList, toggleFriendQuality } from '../../redux/actions';
+import { toggleFriendQuality } from '../../redux/actions';
 
 const mapStateToProps = state => {
   const friendIdList = getFriendList(state);
@@ -16,24 +16,19 @@ const mapStateToProps = state => {
     })
   });
 
-
-
   return { friendList };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onInitFriendList: friendList => {
-      dispatch(initFriendList(friendList))
-    },
     onClickCheckbox: (id) => {
-      dispatch(toggleFriendQuality(id))
+      dispatch(toggleFriendQuality(id));
     }
   }
 }
 
 function Dashboard(props) {
-  const {friendList, onInitFriendList, onClickCheckbox} = props;
+  const {friendList, onClickCheckbox} = props;
 
   
   console.log('home')

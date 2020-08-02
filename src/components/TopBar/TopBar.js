@@ -1,12 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Styles from './TopBar.module.css';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { getAuthInfo } from '../../redux/selectors';
+import { logout } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
 
-function TopBar() {
+const mapStateToProps = state => {
+  return { info: getAuthInfo(state) }
+}
 
-  return(
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogOut: () => {
+      dispatch(logout());
+    }
+  }
+}
+
+function TopBar(props) {
+  const { info, onLogOut } = props;
+
+  const history = useHistory();
+
+  useEffect(() => {
+    console.log("is login: ", info.isLogin);
+    console.log("info: ", info);
+    if(!info.isLogin) {
+      history.push('/login')
+    }
+  }, [info.isLogin]);
+
+  return (
     <div className={Styles.wrapper}>
+      <div className={Styles.infoWrapper}>
+        <div className={Styles.avatarWrapper}>
+          <img src={info.avatar} alt='' />
+        </div>
+        <p>{info.name}</p>
+      </div>
+
+      <div className={Styles.logoutBtn} onClick={onLogOut}><FaSignOutAlt /></div>
     </div>
   )
 }
 
-export default TopBar;
+export default connect(mapStateToProps, mapDispatchToProps)(TopBar);

@@ -1,38 +1,33 @@
 import React, { useReducer, useEffect } from 'react';
 import Styles from './PersonalInfo.module.css';
 import { connect } from 'react-redux';
-import { getFriendList, getFriendById } from '../../redux/selectors';
+import { getFriendById } from '../../redux/selectors';
 import { editInfo } from '../../redux/actions';
+import { TopBar } from '../../components';
+import classNames from 'classnames';
 
 const mapStateToProps = (state) => {
-  const friendList = getFriendList(state);
-
-  console.log("friend list: ", friendList);
-
   const pathname = window.location.pathname;
-
   const id = pathname.substr(pathname.lastIndexOf('/') + 1);
-
-  console.log("info id: ", id);
-
   const info = getFriendById(state, parseInt(id));
 
-  console.log("info: ", info);
-
-  return { info }
+  return { id, info }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onChangeInfo: info => {
-      dispatch(editInfo(info))
+    onChangeInfo: (id, info) => {
+      dispatch(editInfo(id, info))
     }
   }
 }
 
 function reducer(state, action) {
+  console.log("action type: ", action.type);
+  console.log("is action type === isGoodFriend: ", action.type === "isGoodFriend");
+
   switch (action.type) {
-    case "all": 
+    case "all":
       return {
         ...state,
         ...action.value
@@ -45,7 +40,7 @@ function reducer(state, action) {
     case "description":
       return {
         ...state,
-        lastName: action.value,
+        description: action.value,
       };
     case "isGoodFriend":
       return {
@@ -58,9 +53,8 @@ function reducer(state, action) {
 }
 
 function PersonalInfo(props) {
-  const { info } = props;
+  const { id, info, onChangeInfo } = props;
 
-  console.log('info in function: ', info);
   const [infoState, setInfoState] = useReducer(reducer, info);
 
   const handleChange = (event) => {
@@ -72,14 +66,17 @@ function PersonalInfo(props) {
   };
 
   const getDetail = (info, type) => {
-    console.log("get detail");
-    console.log("info: ", info);
     //remember Mr.Tam has said "don't make your code be complicated"
+    console.log('type: ', type);
+    if (type === 'description') {
+      console.log("info description: ", info);
+    };
+
     return info ? info[type] : (() => {
-      if(type === 'avatar') {
+      if (type === 'avatar') {
         return '../../images/avatar.jpg';
       } else {
-        return ''
+        return '';
       }
     })()
   }
@@ -87,19 +84,59 @@ function PersonalInfo(props) {
   useEffect(() => {
     setInfoState({
       type: 'all',
-      value: {...info}
+      value: { ...info }
     })
-  }, [info])
+  }, [JSON.stringify(info)])
+
+  const getFinalDetail = (infoState, type) => {
+    const result = getDetail(infoState, type);
+    return result ? result : '';
+  }
+
+  const toggleQuality = () => {
+    console.log("infoState.isGoodFriend: ", infoState.isGoodFriend)
+    setInfoState({
+      type: 'isGoodFriend',
+      value: !infoState.isGoodFriend
+    })
+  }
+
+  const submitInfo = () =>{
+    onChangeInfo(id, infoState);
+  }
 
   return (
     <div className={Styles.wrapper}>
-    <div className={Styles.avatarAndNickname} >
-      <img src={getDetail(infoState, 'avatar')} alt=""/>
-      <div className={Styles.nicknameWrapper}>
-        <p>Nickname</p>
-        <input type="text" name='nickname' value={getDetail(infoState, 'nickname')} onChange={handleChange}/>
+      <TopBar />
+      <div className={classNames('content')}>
+        <div className={Styles.wrapperContent}>
+          <div className={Styles.avatarAndNickname} >
+            <div className={Styles.avatar}>
+              <img src={getDetail(infoState, 'avatar')} alt="" />
+            </div>
+            <div className={Styles.nicknameWrapper}>
+              <p>Nickname</p>
+              <input type="text" name='nickname' value={getFinalDetail(infoState, 'nickname')} onChange={handleChange} />
+
+            </div>
+            <div className={Styles.switchQuality} onClick={toggleQuality}>
+              <div className={Styles.leftSide}>Bad friend </div>
+              <div className={Styles.rightSide}>Good friend</div>
+              <div className={classNames(
+                Styles.coverPiece,
+                getDetail(infoState, 'isGoodFriend') ? '' : Styles.toggle
+              )}></div>
+            </div>
+          </div>
+          <div className={Styles.descriptionWrapper}>
+            <p className={Styles.label}>Description</p>
+            <textarea type="text" name='description' rows="5" value={getFinalDetail(infoState, 'description')} onChange={handleChange} />
+          </div>
+          <div className={Styles.submit}>
+            <button onClick={submitInfo}>Save</button>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   )
 }

@@ -1,8 +1,72 @@
 .wrapper {
-  height: 150px;
+  height: 80px;
   width: 100vw;
   background-color: #4267B2;
 
   position: fixed;
   top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.avatarWrapper {
+  max-height: 60px;
+  max-width: 60px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+
+  margin-right: 20px;
+
+  overflow: hidden;
+}
+
+.avatarWrapper img {
+  max-height: 60px;
+}
+
+.infoWrapper {
+  display: flex;
+
+  margin-right: 50px;
+  padding-right: 10px;
+
+  border-radius: 30px;
+
+  cursor: pointer;
+}
+
+.infoWrapper:hover,.logoutBtn:hover {
+  background-color: #bfc4dc;
+}
+
+.infoWrapper p {
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.logoutBtn {
+  height: 60px;
+  font-size: 20px;
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+
+  padding: 5px 20px;
+
+  margin-right: 20px;
+
+  border-radius: 30px;
+
+  cursor: pointer;
 }

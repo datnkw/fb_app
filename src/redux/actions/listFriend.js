@@ -17,9 +17,10 @@ export const toggleFriendQuality = (id) => ({
   }
 });
 
-export const editInfo = (info) => ({
+export const editInfo = (id, info) => ({
   type: EDIT_INFO,
   payload: {
-    info
+    id,
+    ...info
   }
 })

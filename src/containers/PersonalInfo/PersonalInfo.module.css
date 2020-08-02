@@ -1,3 +1,117 @@
 .avatarAndNickname {
   display: flex;
 }
+
+.wrapper {
+  height: 100vh;
+}
+
+.wrapperContent {
+  padding: 100px;
+  height: 100%;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.nicknameWrapper {
+  margin: 0px 30px;
+}
+
+.nicknameWrapper p {
+  margin: 10px 0px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+.label {
+  margin: 10px 0px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+.nicknameWrapper input {
+  font-size: 40px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+}
+
+.switchQuality {
+  position: relative;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: fit-content;
+  overflow: hidden;
+  margin: auto;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.switchQuality div {
+  padding: 30px;
+  width: 220px;
+  text-align: center;
+}
+.leftSide {
+  background-color: #d62d20;
+}
+
+.rightSide {
+  background-color: #008744;
+}
+
+.coverPiece {
+  position: absolute;
+  background-color: #999999;
+  height: 100%;
+  width: 220px;
+  left: 0px;
+  transition: all 0.25s ease-in;
+}
+
+.toggle {
+  left: 220px;
+}
+
+.descriptionWrapper {
+  margin: 20px 0px;
+}
+
+.descriptionWrapper textarea {
+  font-size: 20px;
+  width: 100%;
+  border-radius: 10px;
+
+  padding: 10px;
+  resize: none;
+
+  font-family: 'Lato', sans-serif;
+}
+
+.submit {
+  width: fit-content;
+  margin: 40px auto;
+}
+
+.submit button {
+  background-color: #4267B2;
+  color: #fff;
+  padding: 20px;
+  font-size: 20px;
+
+  box-shadow: none;
+  border: none;
+
+  border-radius: 10px;
+}

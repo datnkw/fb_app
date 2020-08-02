@@ -44,7 +44,9 @@ export default function(state = initialState, action) {
     }
     case EDIT_INFO: {
       const {id, nickname, description, isGoodFriend} = action.payload;
-
+      console.log("info in reducer: ", action.payload);
+      console.log("id: ", id);
+      
       return {
         ...state,
         [id]: {
