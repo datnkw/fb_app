@@ -2,18 +2,24 @@ import { INIT_FRIEND_LIST, EDIT_INFO, TOGGLE_FRIEND_QUALITY } from "../actionTyp
 
 const initialState = {};
 
-const convertFriendListToState = (friendList) => {
-  const result = {};
-  friendList.map((value, index) => {
-    result[index] = {
-      ...value,
-      nickname: '',
-      description: '',
-      isGoodFriend: false
-    }
+const convertFriendListToState = (friendList = []) => {
+  friendList.forEach(item => console.log(item))
+  const result = friendList.reduce((prev, cur, index) => {
+    console.log('ahihih', {cur})
+    prev[index] = {
+      name: cur.name,
+      avatar: cur.avatar
+    };
+    return prev;
+  }, {});
+
+  console.log({
+    result,
+    friendList,
+    isArray: Array.isArray(friendList)
   })
 
-  return result;
+  return result
 }
 
 export default function(state = initialState, action) {
@@ -22,9 +28,9 @@ export default function(state = initialState, action) {
     case INIT_FRIEND_LIST: {
       
       const friendListObject = convertFriendListToState(action.payload.friendList);
-      console.log("friendListObject: ", friendListObject);
+      // console.log("friendListObject: ", friendListObject, action);
       return {
-        ...state,
+        // ...state,
         ...friendListObject
       };
     }

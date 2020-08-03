@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onLogOut: () => {
+      //window.FB.logout();
       dispatch(logout());
     }
   }

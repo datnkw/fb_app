@@ -30,6 +30,8 @@ const mapDispatchToProps = dispatch => {
 function Dashboard(props) {
   const {friendList, onClickCheckbox} = props;
 
+  console.log("friend list in dashboard: ", friendList);
+
   
   console.log('home')
   return (

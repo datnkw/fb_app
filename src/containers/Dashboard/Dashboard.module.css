@@ -42,6 +42,7 @@
 .avatar img {
   max-width: 90px;
   max-height: 90px;
+  min-width: 90px;
 }
 
 .markWrapper {

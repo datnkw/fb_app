@@ -1,9 +1,9 @@
 import { LOGIN, LOGOUT } from "../actionTypes";
 
 const initialState = {
-  isLogin: true,
-  name: 'Dat',
-  avatar: 'https://i.imgur.com/ZA4J2Bw.jpeg',
+  isLogin: false,
+  name: '',
+  avatar: '',
   token: ''
 };
 

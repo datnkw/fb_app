@@ -18,6 +18,11 @@
   overflow: hidden;
 }
 
+.avatar img {
+  max-width: 150px;
+  min-width: 150px;
+}
+
 .nicknameWrapper {
   margin: 0px 30px;
 }

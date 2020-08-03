@@ -23,7 +23,7 @@ function App(props) {
 
   useEffect(() => {
     console.log('efdfdfdf')
-    onInitFriendList(friendList);
+    //onInitFriendList(friendList);
   }, [])
 
   return (
