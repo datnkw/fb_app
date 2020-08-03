@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { login } from "../../redux/actions";
 import firebase from "../../utils/firebase";
 import { useHistory } from 'react-router-dom';
+import axios from "axios";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -14,9 +15,12 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+const tokenTest = 'EAAIubBvjHZA0BAKlnBZBYciQ7A1yNUJURnSEnJfws2an0Q4KflENqeJTP2T3PvJdaH5NtXZCdLSL0ZCgm4BmlzI95wlafrU01NhPdMGAETfq3loZAIjHQ7rGMNxMiTMKZCl9Q0omsDnmsGBWM2H77kMc7cCuKMOJnCt5ZA4yl6DUkjb03O3xyGHHuMElBxg6sf3NN6mQk2wFFOiZAVbYtJ10'
+
 function Login(props) {
   const history = useHistory();
   const provider = new firebase.auth.FacebookAuthProvider();
+  // provider.addScope('use_friends');
   console.log("provider: ", provider);
 
   const doTheLogIn = () => {
@@ -33,7 +37,14 @@ function Login(props) {
       console.log("name: ", user.displayName);
 
       props.onLogIn(user.displayName, user.photoURL, token);
-      history.push('/');
+      const url = 'https://graph.facebook.com/v7.0/649576518990903/friends?access_token=' + tokenTest;
+      axios.get(url).then(response => {
+        console.log("response.data: ", response.data);
+        history.push('/');  
+      }).catch(error => {
+        console.log('error message: ', error.message);
+      })
+      
     }).catch(function(error) {
       // Handle Errors here.
       const errorCode = error.code;
