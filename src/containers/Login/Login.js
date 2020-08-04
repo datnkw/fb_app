@@ -46,12 +46,6 @@ const getAvatar = (userId) => new Promise(resolve => {
   );
 })
 
-const getName = () => new Promise(resolve => {
-  FB.api('/me', response => {
-    resolve(response.name);
-  })
-})
-
 const getFriendList = (userId) => new Promise(resolve => {
   const url = '/' + userId + '/friends'
 
