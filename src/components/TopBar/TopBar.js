@@ -38,7 +38,10 @@ function TopBar(props) {
         <div className={Styles.avatarWrapper}>
           <img src={info.avatar} alt='' />
         </div>
-        <p>{info.name}</p>
+        <div className={Styles.nameAndEmail}>
+        <p className={Styles.name}>{info.name}</p>
+  <p className={Styles.email}>{info.email}</p>
+  </div>
       </div>
 
       <div className={Styles.logoutBtn} onClick={onLogOut}><FaSignOutAlt /></div>

@@ -1,5 +1,6 @@
 import React from "react";
 import Styles from "./Dashboard.module.css";
+import classNames from 'classnames';
 import { useHistory } from "react-router-dom";
 
 function ItemUser({ info, onClickCheckbox }) {
@@ -25,7 +26,13 @@ function ItemUser({ info, onClickCheckbox }) {
         <img src={info.avatar} alt=""/>
       </div>
       <div className={Styles.info}>
+        <div className={classNames(
+          Styles.nameAndNickname,
+          Styles.infoFriend
+          )}>
         <p className={Styles.name}>{info.name}</p>
+  <p className={Styles.nickname}>{info.nickname}</p>
+        </div>
         <div className={Styles.space} />
         <div className={Styles.markWrapper}>
           <p>Bad friend</p>

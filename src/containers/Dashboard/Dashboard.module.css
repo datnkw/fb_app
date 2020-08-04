@@ -17,7 +17,6 @@
 .info {
   flex-grow: 1;
   padding: 20px;
-
   display: flex;
 }
 
@@ -28,6 +27,7 @@
 .name {
   font-size: 20px;
   font-weight: bold;
+  flex-grow: 1;
 }
 
 .avatar {
@@ -47,7 +47,6 @@
 
 .markWrapper {
   display: flex;
-
   align-items: center;
 }
 
@@ -55,5 +54,26 @@
   margin-right: 10px;
 }
 
-.checkbox {
+.nameAndNickname {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 16px;
+  color: #777777;
+}
+
+.infoFriend {
+  color: #000 !important;
+}
+
+@media only screen and (max-width: 768px){
+  .info {
+    flex-direction: column;
+  }
+
+  .markWrapper {
+    margin-top: 10px;
+  }
 }

@@ -53,6 +53,15 @@
   font-weight: bold;
 }
 
+.nameAndEmail {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  flex-grow: 1;
+}
+
 .logoutBtn {
   height: 60px;
   font-size: 20px;
@@ -69,4 +78,9 @@
   border-radius: 30px;
 
   cursor: pointer;
+}
+
+.email {
+  font-size: 12px !important;
+  margin-bottom: 5px;
 }

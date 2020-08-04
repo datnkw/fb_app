@@ -1,17 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Styles from './Login.module.css';
 import { connect } from "react-redux";
 import { login, initFriendList } from "../../redux/actions";
 import firebase from "../../utils/firebase";
 import { useHistory } from 'react-router-dom';
-import axios from "axios";
-import host from '../../utils';
-import { addScript } from './addScript';
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogIn: (name, avatar, token) => {
-      dispatch(login({name, avatar, token}));
+    onLogIn: (info) => {
+      dispatch(login(info));
     },
     onInitFriendList: (friendList) => {
       dispatch(initFriendList(...[friendList]));
@@ -69,33 +66,31 @@ const getFriendList = (userId) => new Promise(resolve => {
 
 });
 
+const getAllInfo = (userId) => new Promise(resolve => {
+  const url = '/' + userId + '?fields=name,email,picture';
+
+  FB.api(
+    url,
+    response => {
+      if(response && !response.error) {
+        resolve({
+          name: response.name,
+          avatar: response.picture.data.url,
+          email: response.email
+        })
+      }
+    }
+  )
+})
+
 function Login(props) {
   const history = useHistory();
   const provider = new firebase.auth.FacebookAuthProvider();
-  // provider.addScope('use_friends');
+
   console.log("provider: ", provider);
 
   const getInfo = async () => {
-    let authResponse, type, name, userId, token, avatar;
-
-
-    // await FB.getLoginStatus(response => {
-    //   if(response.status === 'connected') {
-    //     console.log('get login status ')
-    //     type = 'get login status';
-    //     realResponse = response;
-    //     return;
-    //   } else { 
-    //     console.log('login begin');
-    //     (async () => {
-    //     await FB.login(response => {
-    //       type = 'login';
-    //       realResponse = response
-    //       return;
-    //     }, {scope: 'email, public_profile'})
-    //   })();
-    //   }
-    // });
+    let authResponse, type;
 
     const getLoginStatusResponse = await getLoginStatus();
 
@@ -111,11 +106,10 @@ function Login(props) {
     console.log('type: ', type);
     console.log("realResponse: ", authResponse);
 
-    token = authResponse.accessToken;
-    userId = authResponse.userID;
+    const token = authResponse.accessToken;
+    const userId = authResponse.userID;
 
-    avatar = await getAvatar(userId);
-    name = await getName();
+    const {name, avatar, email} = await getAllInfo(userId);
 
     const friendList = await getFriendList(userId);
 
@@ -127,61 +121,15 @@ function Login(props) {
       avatar: avatars[index],
     }));
 
-    props.onLogIn(name, avatar, token);
+    props.onLogIn({name, avatar, email, token});
     props.onInitFriendList(friendListAfterAddAvatar);
-    history.push('/')
   }
 
-  const doTheLogIn = () => {
-    getInfo();
-
-    // FB.getLoginStatus(response => {
-    //   if()
-    // })
-
-    // window.FB.login(response => {
-    //   console.log("response: ", response);
-    //   //const token = response.
-    //   if(response.status !== 'connected') {
-    //     alert('Login failed');
-    //     return;
-    //   }
-
-    //   const authResponse = response.authResponse;
-    //   const token = authResponse.accessToken;
-    //   const userId = authResponse.userID;
-
-    //   const url = 'https://graph.facebook.com/v7.0/' + userId + '/friends?access_token=' + token;
-     
-    //   window.FB.api('/me', user => {
-    //     console.log("user: ", user);
-    //   props.onLogIn(user.name, 'https://i.imgur.com/ZA4J2Bw.jpeg', token);
-    //   axios.get(url).then(response => {
-    //     console.log("response.data: ", response.data);
-    //     history.push('/');  
-    //   }).catch(error => {
-    //     console.log('error message: ', error.message);
-    //   })
-    // })
-    // }, {scope: 'email, public_profile'})
-    
+  const doTheLogIn = async () => {
+    await getInfo();
+    console.log('done get info');
+    history.push('/');
   }
-
-  // useEffect(() => {
-  //   try {
-  //     addScript();
-  //     const params = {
-  //       appId: `613991812636061`,
-  //       cookie: true,
-  //       xfbml: false,
-  //       version: 'v7.0'
-  //     };
-  //     window.FB.init(params);
-  //   } catch(error) {
-  //       console.log("error: ", error);
-  //   }
-  
-  // } )
 
     return (
       <div className={Styles.wrapper}>
