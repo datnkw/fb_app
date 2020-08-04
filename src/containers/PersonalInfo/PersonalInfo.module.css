@@ -179,4 +179,8 @@ textarea:focus, input:focus {
   .wrapperContent {
     padding: 50px;
   }
+
+  .nicknameWrapper {
+    margin: 0px;
+  }
 }
