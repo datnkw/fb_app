@@ -5,6 +5,10 @@ import Styles from './Dialog.module.css';
 function Dialog(props) {
   const { children, isShowedUp, toggleDialog } = props;
 
+  const clickContent = (event) => {
+    event.stopPropagation();
+  }
+
   return (
     <div className={
       classNames(
@@ -12,7 +16,7 @@ function Dialog(props) {
         !isShowedUp ? Styles.hidden : ''
         )}
       onClick={toggleDialog}>
-      <div className={Styles.contentWrapper}>
+      <div className={Styles.contentWrapper} onClick={clickContent}>
         {children}
       </div>
     </div>

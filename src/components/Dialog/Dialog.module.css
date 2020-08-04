@@ -1,8 +1,26 @@
 .wrapper {
     position: fixed;
+    top: 0;
+
     width: 100vw;
     height: 100vh;
+    background: rgba(119, 119, 119, 0.4);
+    /* background-color: #777777; */
+    /* opacity: 0.4; */
 
-    background-color: #777777;
-    opacity: 0.4;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.contentWrapper {
+    background-color: #fff;
+    padding: 20px;
+    opacity: 1;
+    width: fit-content;
+}
+
+.hidden {
+    display: none;
 }
