@@ -106,6 +106,7 @@ function PersonalInfo(props) {
             <div className={Styles.avatar}>
               <img src={getDetail(infoState, 'avatar')} alt="" />
             </div>
+            <div className={Styles.inputAndToggleWrapper}>
             <div className={Styles.nicknameWrapper}>
               <p>Nickname</p>
               <input type="text" name='nickname' value={getFinalDetail(infoState, 'nickname')} onChange={handleChange} />
@@ -119,6 +120,7 @@ function PersonalInfo(props) {
                 getDetail(infoState, 'isGoodFriend') ? '' : Styles.toggle
               )}></div>
             </div>
+          </div>
           </div>
           <div className={Styles.descriptionWrapper}>
             <p className={Styles.label}>Description</p>

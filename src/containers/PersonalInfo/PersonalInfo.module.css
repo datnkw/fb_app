@@ -120,3 +120,63 @@ textarea:focus, input:focus {
 
   border-radius: 10px;
 }
+
+.inputAndToggleWrapper {
+  display: flex;
+}
+
+@media only screen and (max-width: 1280px){
+  .switchQuality {
+
+    font-size: 16px;
+  }
+
+  .switchQuality div {
+    padding: 16px;
+    width: 140px;
+
+  }
+
+  .toggle {
+    left: 140px;
+  }
+
+  .nicknameWrapper p {
+    font-size: 20px;
+  }
+
+  .nicknameWrapper input {
+    font-size: 30px;
+  }
+
+  .label {
+    font-size: 20px;
+  }
+
+  .descriptionWrapper textarea {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 1024px){
+  .inputAndToggleWrapper {
+    flex-direction: column;
+  }
+
+  .switchQuality {
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .avatarAndNickname {
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wrapperContent {
+    padding: 50px;
+  }
+}
