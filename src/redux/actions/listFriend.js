@@ -1,8 +1,6 @@
 import { INIT_FRIEND_LIST, EDIT_INFO, TOGGLE_FRIEND_QUALITY } from "../actionTypes";
 
 export const initFriendList = (friendList) => {
-  console.log("action init: ", friendList);
-
   return ({
   type: INIT_FRIEND_LIST,
   payload: {

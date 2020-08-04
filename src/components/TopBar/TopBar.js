@@ -12,8 +12,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogOut: () => {
-      //window.FB.logout();
+    onLogOut: async () => {
+      await window.FB.logout(response => {
+        console.log("response logout: ", response);
+      });
       dispatch(logout());
     }
   }
@@ -25,8 +27,6 @@ function TopBar(props) {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("is login: ", info.isLogin);
-    console.log("info: ", info);
     if(!info.isLogin) {
       history.push('/login')
     }

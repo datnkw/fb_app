@@ -5,7 +5,7 @@ const initialState = {};
 const convertFriendListToState = (friendList = []) => {
   friendList.forEach(item => console.log(item))
   const result = friendList.reduce((prev, cur, index) => {
-    console.log('ahihih', {cur})
+
     prev[index] = {
       name: cur.name,
       avatar: cur.avatar
@@ -13,17 +13,10 @@ const convertFriendListToState = (friendList = []) => {
     return prev;
   }, {});
 
-  console.log({
-    result,
-    friendList,
-    isArray: Array.isArray(friendList)
-  })
-
   return result
 }
 
 export default function(state = initialState, action) {
-  console.log("action type: ", action.type);
   switch (action.type) {
     case INIT_FRIEND_LIST: {
       
@@ -37,8 +30,6 @@ export default function(state = initialState, action) {
     case TOGGLE_FRIEND_QUALITY: {
       const {id} = action.payload;
 
-      console.log("id: ", id);
-      console.log("state: ", state);
 
       return {
         ...state,
@@ -50,9 +41,7 @@ export default function(state = initialState, action) {
     }
     case EDIT_INFO: {
       const {id, nickname, description, isGoodFriend} = action.payload;
-      console.log("info in reducer: ", action.payload);
-      console.log("id: ", id);
-      
+
       return {
         ...state,
         [id]: {

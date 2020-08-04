@@ -11,17 +11,13 @@ import { addScript } from './addScript';
 const mapDispatchToProps = dispatch => {
   return {
     onLogIn: (name, avatar, token) => {
-      console.log("name in onLogIn: ", name);
       dispatch(login({name, avatar, token}));
     },
     onInitFriendList: (friendList) => {
-      console.log("init friend list action: ", ...[friendList]);
       dispatch(initFriendList(...[friendList]));
     }
   }
 }
-
-const tokenTest = 'EAAIubBvjHZA0BAKlnBZBYciQ7A1yNUJURnSEnJfws2an0Q4KflENqeJTP2T3PvJdaH5NtXZCdLSL0ZCgm4BmlzI95wlafrU01NhPdMGAETfq3loZAIjHQ7rGMNxMiTMKZCl9Q0omsDnmsGBWM2H77kMc7cCuKMOJnCt5ZA4yl6DUkjb03O3xyGHHuMElBxg6sf3NN6mQk2wFFOiZAVbYtJ10'
 
 const FB = window.FB;
 
@@ -31,14 +27,6 @@ const getLoginStatus = () => new Promise((resolve, reject) => {
     if(error)
     return reject(error);
     resolve(response);
-
-    // if(response.status === 'connected') {
-    //   resolve(response);
-    // } else {
-    //   FB.login(response => {
-
-    //   })
-    // }
   })
 });
 
@@ -56,17 +44,9 @@ const getAvatar = (userId) => new Promise(resolve => {
     'GET',
     {},
     function(response) {
-      console.log('avatar response: ', response);
-    console.log('avatar url: ', response.data.url);
     resolve(response.data.url);
     }
   );
-
-  // FB.api(url, 'GET', {}, response => {
-  //   console.log('avatar response: ', response);
-  //   console.log('avatar url: ', response.url);
-  //   resolve(response.url);
-  // })
 })
 
 const getName = () => new Promise(resolve => {
@@ -83,7 +63,6 @@ const getFriendList = (userId) => new Promise(resolve => {
     'GET',
     {},
     function(response) {
-      console.log('friends response: ', response);
      resolve(response.data);
     }
   );
@@ -140,8 +119,6 @@ function Login(props) {
 
     const friendList = await getFriendList(userId);
 
-    console.log("friend list before: ", friendList);
-
     const avatars = await Promise.all(
       friendList.map(f => getAvatar(f.id))
     );
@@ -150,12 +127,6 @@ function Login(props) {
       avatar: avatars[index],
     }));
 
-    console.log("friend list after add avatar: ", friendListAfterAddAvatar);
-
-    
-    console.log({
-      friendListAfterAddAvatar
-    })
     props.onLogIn(name, avatar, token);
     props.onInitFriendList(friendListAfterAddAvatar);
     history.push('/')

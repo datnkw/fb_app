@@ -23,9 +23,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 function reducer(state, action) {
-  console.log("action type: ", action.type);
-  console.log("is action type === isGoodFriend: ", action.type === "isGoodFriend");
-
   switch (action.type) {
     case "all":
       return {
@@ -67,10 +64,6 @@ function PersonalInfo(props) {
 
   const getDetail = (info, type) => {
     //remember Mr.Tam has said "don't make your code be complicated"
-    console.log('type: ', type);
-    if (type === 'description') {
-      console.log("info description: ", info);
-    };
 
     return info ? info[type] : (() => {
       if (type === 'avatar') {
@@ -94,7 +87,6 @@ function PersonalInfo(props) {
   }
 
   const toggleQuality = () => {
-    console.log("infoState.isGoodFriend: ", infoState.isGoodFriend)
     setInfoState({
       type: 'isGoodFriend',
       value: !infoState.isGoodFriend
