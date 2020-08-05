@@ -1,5 +1,5 @@
 import React from 'react';
-import { TopBar, Loading } from '../../components';
+import { TopBar } from '../../components';
 import ItemUser from './ItemUser';
 import { connect } from 'react-redux';
 import { getFriendList, getFriendById } from '../../redux/selectors';

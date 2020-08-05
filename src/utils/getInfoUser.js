@@ -1,6 +1,6 @@
 const FB = window.FB;
 
-export const getAllInfo = (userId) => new Promise(resolve => {
+const getAllInfo = (userId) => new Promise(resolve => {
   const url = '/' + userId + '?fields=name,email,picture';
 
   FB.api(
@@ -17,7 +17,7 @@ export const getAllInfo = (userId) => new Promise(resolve => {
   )
 });
 
-export const getFriendList = (userId) => new Promise(resolve => {
+const getFriendList = (userId) => new Promise(resolve => {
   const url = '/' + userId + '/friends'
 
   FB.api(
@@ -32,7 +32,7 @@ export const getFriendList = (userId) => new Promise(resolve => {
 
 });
 
-export const getAvatar = (userId) => new Promise(resolve => {
+const getAvatar = (userId) => new Promise(resolve => {
   const url = '/' + userId + '/picture?redirect=false'
 
   FB.api(
@@ -44,3 +44,25 @@ export const getAvatar = (userId) => new Promise(resolve => {
     }
   );
 });
+
+const getInfoUser = async (userId) => {
+    const {name, avatar, email} = await getAllInfo(userId);
+      const friendList = await getFriendList(userId);
+
+      const avatars = await Promise.all(
+        friendList.map(f => getAvatar(f.id))
+      );
+      const friendListAfterAddAvatar = friendList.map((f, index) => ({
+        ...f,
+        avatar: avatars[index],
+      }));
+
+    return {
+        name,
+        avatar,
+        email,
+        friendListAfterAddAvatar
+    }
+}
+
+export default getInfoUser;

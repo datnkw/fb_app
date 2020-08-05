@@ -6,6 +6,9 @@ import { getAuthInfo } from '../../redux/selectors';
 import { login, logout, initFriendList } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../';
+import { getInfoUser } from '../../utils';
+
+const FB = window.FB;
 
 const mapStateToProps = state => {
   return { info: getAuthInfo(state) }
@@ -14,7 +17,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onLogOut: async () => {
-      await window.FB.logout(response => {
+      await FB.logout(response => {
         console.log("response logout: ", response);
       });
       dispatch(logout());
@@ -28,53 +31,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const FB = window.FB;
-
-const getAllInfo = (userId) => new Promise(resolve => {
-  const url = '/' + userId + '?fields=name,email,picture';
-
-  FB.api(
-    url,
-    response => {
-      if(response && !response.error) {
-        resolve({
-          name: response.name,
-          avatar: response.picture.data.url,
-          email: response.email
-        })
-      }
-    }
-  )
-});
-
-const getFriendList = (userId) => new Promise(resolve => {
-  const url = '/' + userId + '/friends'
-
-  FB.api(
-    url,
-    'GET',
-    {},
-    function(response) {
-    console.log('response get friend list: ', response);
-     resolve(response.data);
-    }
-  );
-
-});
-
-const getAvatar = (userId) => new Promise(resolve => {
-  const url = '/' + userId + '/picture?redirect=false'
-
-  FB.api(
-    url,
-    'GET',
-    {},
-    function(response) {
-    resolve(response.data.url);
-    }
-  );
-});
-
 function TopBar(props) {
   const { info, onLogOut } = props;
 
@@ -84,10 +40,6 @@ function TopBar(props) {
 
   const goHome = () => {
     history.push('/');
-  }
-
-  const getInfo = async () => {
-
   }
 
   useEffect(() => {
@@ -104,22 +56,11 @@ function TopBar(props) {
         return;
       }
 
-      console.log('already login');
-
       const authResponse = response.authResponse;
       const token = authResponse.accessToken;
       const userId = authResponse.userID;
 
-      const {name, avatar, email} = await getAllInfo(userId);
-      const friendList = await getFriendList(userId);
-
-      const avatars = await Promise.all(
-        friendList.map(f => getAvatar(f.id))
-      );
-      const friendListAfterAddAvatar = friendList.map((f, index) => ({
-        ...f,
-        avatar: avatars[index],
-      }));
+      const {name, avatar, email, friendListAfterAddAvatar} = await getInfoUser(userId);
 
       props.onLogIn({name, avatar, email, token});
       props.onInitFriendList(friendListAfterAddAvatar);

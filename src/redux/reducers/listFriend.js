@@ -1,29 +1,34 @@
 import { INIT_FRIEND_LIST, EDIT_INFO, TOGGLE_FRIEND_QUALITY } from "../actionTypes";
 
+const localStorage = window.localStorage;
 const initialState = {};
 
 const convertFriendListToState = (friendList = []) => {
-  friendList.forEach(item => console.log(item))
+  // friendList.forEach(item => console.log(item))
   const result = friendList.reduce((prev, cur, index) => {
 
     prev[index] = {
+      idFB: cur.id,
       name: cur.name,
-      avatar: cur.avatar
+      avatar: cur.avatar,
+      ...loadFriendQuality(cur.id)
     };
     return prev;
   }, {});
-
+  console.log("result friendList: ", result);
   return result
+}
+
+const loadFriendQuality = id => {
+  const {isGoodFriend, nickname, description} = JSON.parse(localStorage.getItem(id));
+  return {isGoodFriend, nickname, description}
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case INIT_FRIEND_LIST: {
-      
       const friendListObject = convertFriendListToState(action.payload.friendList);
-      // console.log("friendListObject: ", friendListObject, action);
       return {
-        // ...state,
         ...friendListObject
       };
     }

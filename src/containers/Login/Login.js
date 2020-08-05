@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { login, initFriendList } from "../../redux/actions";
 import firebase from "../../utils/firebase";
 import { useHistory } from 'react-router-dom';
+import {getInfoUser} from '../../utils'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -33,51 +34,6 @@ const getLogin = () => new Promise(resolve => {
   }, {scope: 'email,public_profile,user_friends'})
 });
 
-const getAvatar = (userId) => new Promise(resolve => {
-  const url = '/' + userId + '/picture?redirect=false'
-
-  FB.api(
-    url,
-    'GET',
-    {},
-    function(response) {
-    resolve(response.data.url);
-    }
-  );
-})
-
-const getFriendList = (userId) => new Promise(resolve => {
-  const url = '/' + userId + '/friends'
-
-  FB.api(
-    url,
-    'GET',
-    {},
-    function(response) {
-    console.log('response get friend list: ', response);
-     resolve(response.data);
-    }
-  );
-
-});
-
-const getAllInfo = (userId) => new Promise(resolve => {
-  const url = '/' + userId + '?fields=name,email,picture';
-
-  FB.api(
-    url,
-    response => {
-      if(response && !response.error) {
-        resolve({
-          name: response.name,
-          avatar: response.picture.data.url,
-          email: response.email
-        })
-      }
-    }
-  )
-})
-
 function Login(props) {
   const history = useHistory();
   const provider = new firebase.auth.FacebookAuthProvider();
@@ -104,17 +60,7 @@ function Login(props) {
     const token = authResponse.accessToken;
     const userId = authResponse.userID;
 
-    const {name, avatar, email} = await getAllInfo(userId);
-
-    const friendList = await getFriendList(userId);
-
-    const avatars = await Promise.all(
-      friendList.map(f => getAvatar(f.id))
-    );
-    const friendListAfterAddAvatar = friendList.map((f, index) => ({
-      ...f,
-      avatar: avatars[index],
-    }));
+    const {name, avatar, email, friendListAfterAddAvatar} = await getInfoUser(userId);
 
     props.onLogIn({name, avatar, email, token});
     props.onInitFriendList(friendListAfterAddAvatar);

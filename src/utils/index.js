@@ -1,5 +1,5 @@
 import host from './host';
 import firebase from './firebase';
-import friendList from './friendList';
+import getInfoUser from './getInfoUser';
 
-export {host, firebase, friendList};
+export {host, firebase, getInfoUser};
