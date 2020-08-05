@@ -24,13 +24,13 @@ const getLoginStatus = () => new Promise((resolve, reject) => {
     if(error)
     return reject(error);
     resolve(response);
-  })
+  }, true);
 });
 
 const getLogin = () => new Promise(resolve => {
   FB.login(response => {
     resolve(response);
-  }, {scope: 'email, public_profile'})
+  }, {scope: 'email,public_profile,user_friends'})
 });
 
 const getAvatar = (userId) => new Promise(resolve => {
@@ -54,6 +54,7 @@ const getFriendList = (userId) => new Promise(resolve => {
     'GET',
     {},
     function(response) {
+    console.log('response get friend list: ', response);
      resolve(response.data);
     }
   );

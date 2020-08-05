@@ -17,7 +17,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     onChangeInfo: (id, info) => {
-      dispatch(editInfo(id, info))
+      dispatch(editInfo(id, info));
+      alert('save successful!');
     }
   }
 }
@@ -102,6 +103,7 @@ function PersonalInfo(props) {
       <TopBar />
       <div className={classNames('content')}>
         <div className={Styles.wrapperContent}>
+          
           <div className={Styles.avatarAndNickname} >
             <div className={Styles.avatar}>
               <img src={getDetail(infoState, 'avatar')} alt="" />

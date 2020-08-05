@@ -1,0 +1,55 @@
+.loadingWrapper {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingDot {
+  position: absolute;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  background-color: #4267B2;
+
+  margin-left: 20px;
+
+  animation: loading-dot-animation infinite 0.5s ease-in-out;
+}
+
+.dot1 {
+  transform: translateX(-80px);
+}
+
+.dot2 {
+  transform: translateX(-30px);
+  animation-delay: 0.125s;
+}
+
+.dot3 {
+  transform: translateX(30px);
+  animation-delay: 0.25s;
+}
+
+.dot4 {
+  transform: translateX(80px);
+  animation-delay: 0.375s;
+}
+
+@keyframes loading-dot-animation {
+  from {
+    width: 40px;
+    height: 40px;
+  }
+  to {
+    width: 20px;
+    height: 20px;
+  }
+}
