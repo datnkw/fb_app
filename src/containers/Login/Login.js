@@ -54,8 +54,9 @@ function Login(props) {
       authResponse = rs.authResponse;
     }
 
-    console.log('type: ', type);
-    console.log("realResponse: ", authResponse);
+    if(!authResponse) {
+      return;
+    }
 
     const token = authResponse.accessToken;
     const userId = authResponse.userID;

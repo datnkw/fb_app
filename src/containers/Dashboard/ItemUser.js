@@ -17,6 +17,18 @@ function ItemUser({ info, onClickCheckbox }) {
     onClickCheckbox();
   }
 
+  const getNickname = (nickname) => {
+    if(!nickname) {
+      return;
+    }
+
+    if(nickname.length < 30) {
+      return nickname;
+    }
+
+    return nickname.substr(0, 30) + '...';
+  }
+
   return (
     
 
@@ -31,7 +43,7 @@ function ItemUser({ info, onClickCheckbox }) {
           Styles.infoFriend
           )}>
         <p className={Styles.name}>{info.name}</p>
-  <p className={Styles.nickname}>{info.nickname}</p>
+  <p className={Styles.nickname}>{getNickname(info.nickname)}</p>
         </div>
         <div className={Styles.space} />
         <div className={Styles.markWrapper}>

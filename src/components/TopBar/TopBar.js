@@ -3,7 +3,7 @@ import Styles from './TopBar.module.css';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { getAuthInfo } from '../../redux/selectors';
-import { login, logout, initFriendList } from '../../redux/actions';
+import { login, logout, initFriendList, clearFriendList } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../';
 import { getInfoUser } from '../../utils';
@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => {
       await FB.logout(response => {
         console.log("response logout: ", response);
       });
+      dispatch(clearFriendList());
       dispatch(logout());
     },
     onLogIn: (info) => {

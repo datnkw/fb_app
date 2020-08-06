@@ -1,4 +1,4 @@
-import { INIT_FRIEND_LIST, EDIT_INFO, TOGGLE_FRIEND_QUALITY } from "../actionTypes";
+import { INIT_FRIEND_LIST, EDIT_INFO, TOGGLE_FRIEND_QUALITY, CLEAR_FRIEND_LIST } from "../actionTypes";
 
 export const initFriendList = (friendList) => {
   return ({
@@ -21,4 +21,9 @@ export const editInfo = (id, info) => ({
     id,
     ...info
   }
+})
+
+export const clearFriendList = () => ({
+  type: CLEAR_FRIEND_LIST,
+  payload: {}
 })
